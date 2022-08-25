@@ -25,7 +25,7 @@ class App extends React.Component {
 
   handleCitySubmit = async (e) => {
     e.preventDefault();
-    let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
+    // let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
 
     try {
       let response = await axios.get(
