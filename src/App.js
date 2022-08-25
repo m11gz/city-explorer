@@ -17,7 +17,7 @@ class App extends React.Component {
 
   handleCity = (e) => {
     let city = e.target.value;
-    console.log(this.state.city);
+
     this.setState({
       city: city,
     });
@@ -26,7 +26,7 @@ class App extends React.Component {
   handleCitySubmit = async (e) => {
     e.preventDefault();
     let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
-    console.log(url);
+
     try {
       let response = await axios.get(
         `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
