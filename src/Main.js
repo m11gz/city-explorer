@@ -12,12 +12,12 @@ class Main extends React.Component {
           <Form.Group>
             <Form.Label>Enter a city name</Form.Label>
             <Form.Control
-              name="city"
+              name='city'
               onInput={this.props.handleCity}
               placeholder='"Seattle", "San Francisco"'
-              type="text"
+              type='text'
             ></Form.Control>
-            <Button type="submit" variant="primary">
+            <Button type='submit' variant='primary'>
               Explore!
             </Button>{" "}
           </Form.Group>
@@ -30,7 +30,7 @@ class Main extends React.Component {
           <Card>
             <Card.Body>
               <Card.Title>{this.props.cityData.display_name}</Card.Title>
-              <Card.Img variant="top" src={this.props.mapURL} />
+              <Card.Img variant='top' src={this.props.mapURL} />
               <Card.Text></Card.Text>
             </Card.Body>
             <ListGroup>

@@ -10,7 +10,7 @@ class App extends React.Component {
       city: "",
       cityData: {},
       error: false,
-      errorMesage: "",
+      errorMessage: "",
       showCard: true,
     };
   }
@@ -25,8 +25,11 @@ class App extends React.Component {
 
   handleCitySubmit = async (e) => {
     e.preventDefault();
+    await this.helpMap();
     // let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
+  };
 
+  helpMap = async () => {
     try {
       let response = await axios.get(
         `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
@@ -37,10 +40,12 @@ class App extends React.Component {
         mapURL: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${response.data[0].lat},${response.data[0].lon}&zoom=12`,
         showCard: false,
       });
+      return response.data[0];
     } catch (error) {
       this.setState({
         error: true,
         errorMessage: `Oh oh! It seems like an error has occured: ${error.response.status}`,
+        showCard: false,
       });
     }
   };
@@ -48,11 +53,12 @@ class App extends React.Component {
   render() {
     return (
       <>
+        console.log(cityData);
         <Main
           city={this.state.city}
           cityData={this.state.cityData}
           error={this.state.error}
-          errorMesage={this.state.errorMesage}
+          errorMessage={this.state.errorMessage}
           handleCity={this.handleCity}
           handleCitySubmit={this.handleCitySubmit}
           mapURL={this.state.mapURL}
