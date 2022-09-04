@@ -9,9 +9,11 @@ class App extends React.Component {
     this.state = {
       city: "",
       cityData: {},
+      weatherData: [],
       error: false,
       errorMessage: "",
       showCard: true,
+      moviesData: [], 
     };
   }
 
@@ -25,7 +27,10 @@ class App extends React.Component {
 
   handleCitySubmit = async (e) => {
     e.preventDefault();
-    await this.helpMap();
+    let city = await this.helpMap();
+    this.helpWeather(city);
+    this.helpMovies(this.state.city);
+
     // let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
   };
 
@@ -50,6 +55,52 @@ class App extends React.Component {
     }
   };
 
+  helpWeather = async (input) => {
+    try {
+       let urlWeather = `${process.env.REACT_APP_SERVER}/weather?lat=${input.lat}&lon=${input.lon}&format=json`;
+      //  console.log(this.state);
+       console.log(urlWeather);
+      let response = await axios.get(urlWeather
+      );
+      this.setState({
+        error: false,
+        showForecast: false,
+        weatherData: response.data,
+      });
+      console.log(response.data);
+    } catch (error) {
+      this.setState({
+        error: true,
+        errorMessage: `An Error Occurred: ${error.response.status}`,
+      });
+      console.log(error);
+      console.log(error.response.status)
+    }
+
+  }
+
+  helpMovies = async (input) => {
+    try {
+       let urlMovies = `${process.env.REACT_APP_SERVER}/movies?title=${input}`;
+       console.log(urlMovies);
+      let response = await axios.get(urlMovies
+      );
+      this.setState({
+        error: false,
+        moviesData: response.data,
+      });
+      console.log(response.data);
+    } catch (error) {
+      this.setState({
+        error: true,
+        errorMessage: `An Error Occurred: ${error.response.status}`,
+      });
+      console.log(error);
+      console.log(error.response.status)
+    }
+
+  }
+
   render() {
     return (
       <>
@@ -63,6 +114,8 @@ class App extends React.Component {
           handleCitySubmit={this.handleCitySubmit}
           mapURL={this.state.mapURL}
           showCard={this.state.showCard}
+          weatherData={this.state.weatherData}
+          moviesData={this.state.moviesData}
         />
       </>
     );

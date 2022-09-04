@@ -1,24 +1,38 @@
 import React from "react";
-import Card from "react-bootstrap/Card";
+import Card from 'react-bootstrap/Card';
+
 
 class Weather extends React.Component {
+
+
+
   render() {
-    if (!this.props.weatherData) {
-      return;
-    }
-    let weatherDataArr = this.props.weatherData.map((day, idk) => {
-      return (
-        <Card>
-          <Card.Body>
-            <Card.Title>Date: {day.date}</Card.Title>
-            <Card.Text>(`Description${day.description}`)</Card.Text>
-            <Card.Text>(`High Temp: ${day.highTemp}`)</Card.Text>
-            <Card.Text>(`Low Temp: ${day.lowTemp})</Card.Text>
-          </Card.Body>
-        </Card>
-      );
-    });
-    return <>{weatherDataArr};</>;
+    return (
+<>
+{
+this.props.error
+              ?
+              <p>{this.props.errorMessage}</p>
+              :
+            <Card>
+              <Card.Body>
+                <Card.Title>Date: {this.props.weatherData.date}</Card.Title>
+                <Card.Text>{`High Temp: ${this.props.weatherData.description}`}</Card.Text>
+                <Card.Text>{`High Temp: ${this.props.weatherData.highTemp}`}</Card.Text>
+                <Card.Text>{`Low Temp: ${this.props.weatherData.lowTemp}`}</Card.Text>
+              </Card.Body>
+            </Card>
   }
+</>
+
+    )
+  };
+
 }
+
+
+
+
+
+
 export default Weather;
